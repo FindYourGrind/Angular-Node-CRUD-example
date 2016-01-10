@@ -1,0 +1,21 @@
+<!-- HEADER -->
+<nav class="navbar navbar-inverse" role="navigation">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="/">QS task</a>
+	</div>
+	<div class="navbar-collapse collapse">
+		<ul class="nav navbar-nav">
+			<li><a href="/table">Users table</a></li>
+			<li><a href="/edit">Edit users</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
+			<li ng-if="isAuth"><a href="" ng-click="logOut()">Log Out</a></li>
+			<li ng-if="!isAuth"><a href="/login">Sign In</a></li>
+			<li ng-if="!isAuth"><a href="/register">Register</a></li>
+		</ul>
+	</div>
+</nav>
+
+<div class="jumbotron text-center">
+	<h1>Home Page</h1>
+</div>

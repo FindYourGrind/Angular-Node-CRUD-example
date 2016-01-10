@@ -1,0 +1,50 @@
+<!-- HEADER -->
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/">QS task</a>
+    </div>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="/table">Users table</a></li>
+            <li><a href="/edit">Edit users</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
+            <li ng-if="isAuth"><a href="" ng-click="logOut()">Log Out</a></li>
+            <li ng-if="!isAuth"><a href="/login">Sign In</a></li>
+            <li ng-if="!isAuth"><a href="/register">Register</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="jumbotron text-center">
+    {{ registerMessage }}
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="inputUsername" class="col-sm-4 control-label">Username</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="inputUsername" placeholder="Username" ng-model="register.username" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail" class="col-sm-4 control-label">E-mail</label>
+            <div class="col-sm-4">
+                <input type="email" class="form-control" id="inputEmail" placeholder="E-mail" ng-model="register.email" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-sm-4 control-label">Password</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="register.password" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPasswordConfirmation" class="col-sm-4 control-label">Password Confirmation</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="inputPasswordConfirmation" placeholder="Password" ng-model="register.passwordConfirmation" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" ng-click="register(register.username, register.email, register.password, register.passwordConfirmation)">Register</button>
+        </div>
+    </form>
+</div>

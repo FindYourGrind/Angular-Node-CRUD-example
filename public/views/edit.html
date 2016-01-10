@@ -1,0 +1,168 @@
+<!-- HEADER -->
+<nav class="navbar navbar-inverse" role="navigation">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="/">QS task</a>
+	</div>
+	<div class="navbar-collapse collapse">
+		<ul class="nav navbar-nav">
+			<li><a href="/table">Users table</a></li>
+			<li><a href="/edit">Edit users</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
+			<li ng-if="isAuth"><a href="" ng-click="logOut()">Log Out</a></li>
+			<li ng-if="!isAuth"><a href="/login">Sign In</a></li>
+			<li ng-if="!isAuth"><a href="/register">Register</a></li>
+		</ul>
+	</div>
+</nav>
+
+<div class="jumbotron  text-center">
+
+	<div class="panel panel-success">
+		<div class="panel-heading text-left">
+			<h3 class="panel-title left">Create new user</h3>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline" ng-submit="createUser()">
+				<div class="form-group">
+					<input type="text" class="form-control" id="inputName"
+						   placeholder="username" ng-model="dataForCreating.username" required>
+				</div>
+				<div class="form-group">
+					<input type="email" class="form-control" id="inputEmail"
+						   placeholder="e-mail" ng-model="dataForCreating.email" required>
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" id="inputPassword"
+						   placeholder="password" ng-model="dataForCreating.password" required>
+				</div>
+				<button type="submit" class="btn btn-primary">Create User</button>
+			</form>
+		</div>
+		<div class="alert alert-warning alert-dismissible" role="alert" ng-if="responses.create">
+			<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close" ng-click="responses.create=''">
+				<span aria-hidden="true">&times;</span></button>
+			<strong>{{ responses.create }}</strong>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="panel panel-info">
+		<div class="panel-heading text-left">
+			<h3 class="panel-title left">Find user's by ID, Username or E-mail</h3>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline" ng-submit="getReceivingMethod()">
+				<div class="form-group" ng-switch on="dataForReceiveing.option">
+					Find by:
+					<select class="form-control" id="sel1"
+							ng-model="dataForReceiveing.option"
+							ng-options="item for item in searchingOptions">
+					</select>
+					<div class="form-group" ng-switch-when="User ID">
+						<input class="form-control" type="text" id="findByID"
+							   placeholder=" User ID" ng-model="dataForReceiveing.data" required>
+					</div>
+					<div class="form-group" ng-switch-when="User Name">
+						<input class="form-control" type="text" id="findByName"
+							   placeholder="User Name" ng-model="dataForReceiveing.data" required>
+					</div>
+					<div class="form-group" ng-switch-when="User E-mail">
+						<input class="form-control" type="email" id="fundByEmail"
+							   placeholder="User E-mail" ng-model="dataForReceiveing.data" required>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary">Find User</button>
+			</form>
+
+			<br>
+
+			<div class="table-responsive" ng-if="responses.found === 'Found'">
+				<table class="table table-bordered table-hover">
+					<thead>
+					<tr class="info">
+						<th ng-repeat="key in tableTitle">{{ key }}</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="user in users">
+						<td ng-repeat="key in user"> {{ key }}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="alert alert-warning alert-dismissible" role="alert" ng-if="responses.found">
+			<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close" ng-click="responses.found=''">
+				<span aria-hidden="true">&times;</span></button>
+			<strong>{{ responses.found }}</strong>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="panel panel-warning">
+		<div class="panel-heading text-left">
+			<h3 class="panel-title left">Update user by ID</h3>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline" ng-submit="updateUser()">
+				<select class="form-control" id="sel2"
+						ng-click="fillUserData()"
+						ng-model="idForUpdate"
+						ng-options="item for item in idList">
+				</select>
+				<div class="form-group">
+					<input type="text" class="form-control" id="updateName"
+						   placeholder="username" ng-model="dataForUpdating.username" required>
+				</div>
+				<div class="form-group">
+					<input type="email" class="form-control" id="updateEmail"
+						   placeholder="e-mail" ng-model="dataForUpdating.email" required>
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" id="updatePassword"
+						   placeholder="password" ng-model="dataForUpdating.password" required>
+				</div>
+				<button type="submit" class="btn btn-primary">Update User</button>
+			</form>
+		</div>
+		<div class="alert alert-warning alert-dismissible" role="alert" ng-if="responses.update">
+			<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close" ng-click="responses.update=''">
+				<span aria-hidden="true">&times;</span></button>
+			<strong>{{ responses.update }}</strong>
+		</div>
+	</div>
+
+	<hr>
+
+	<form class="form-inline" ng-submit="deleteUser()">
+		<div class="panel panel-danger">
+			<div class="panel-heading text-left">
+				<h3 class="panel-title">Delete user by ID</h3>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<select class="form-control" id="sel3"
+							ng-model="idForDelete"
+							ng-options="item for item in idList">
+					</select>
+					<button type="submit" class="btn btn-primary">Delete User</button>
+				</div>
+			</div>
+			<div class="alert alert-warning alert-dismissible" role="alert" ng-if="responses.delete">
+				<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close" ng-click="responses.delete=''">
+					<span aria-hidden="true">&times;</span></button>
+				<strong>{{ responses.delete }}</strong>
+			</div>
+		</div>
+	</form>
+
+	<hr>
+
+</div>
