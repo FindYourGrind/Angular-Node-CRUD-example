@@ -15,7 +15,7 @@ http://redis.io/
 
 ~$ bower install
 
-~$ mongod
+~$ sudo service mongod start
 
 ~$ redis-server
 
